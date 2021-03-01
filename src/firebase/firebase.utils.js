@@ -1,9 +1,11 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-const config = {
+
+var firebaseConfig = {
 	apiKey: 'AIzaSyAl9hxWwYPf1sBo3kB4xwd8KS5HrfPkzoQ',
 	authDomain: 'truth-ecommerce-db.firebaseapp.com',
+	databaseURL: 'https://truth-ecommerce-db-default-rtdb.firebaseio.com',
 	projectId: 'truth-ecommerce-db',
 	storageBucket: 'truth-ecommerce-db.appspot.com',
 	messagingSenderId: '878051015321',
@@ -11,11 +13,13 @@ const config = {
 	measurementId: 'G-9JV69MJ0RJ',
 };
 
+firebase.initializeApp(config);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
 	if (!userAuth) return;
-	//query docmumentReference
+
 	const userRef = firestore.doc(`users/${userAuth.uid}`);
-	//document snapshotObject
+
 	const snapShot = await userRef.get();
 
 	if (!snapShot.exists) {
@@ -28,20 +32,19 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 				createdAt,
 				...additionalData,
 			});
-		} catch (err) {
-			console.log('Error creating user', err.message);
+		} catch (error) {
+			console.log('error creating user', error.message);
 		}
 	}
+
 	return userRef;
 };
-
-firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ promt: 'select_account' });
+provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
 
 export default firebase;
