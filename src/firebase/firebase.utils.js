@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-var firebaseConfig = {
+const config = {
 	apiKey: 'AIzaSyAl9hxWwYPf1sBo3kB4xwd8KS5HrfPkzoQ',
 	authDomain: 'truth-ecommerce-db.firebaseapp.com',
 	databaseURL: 'https://truth-ecommerce-db-default-rtdb.firebaseio.com',
